@@ -1,0 +1,1 @@
+{"name":"emprende","version":"1.0.0","private":true,"scripts":{"start":"dotnet run --project Emprende.csproj"}}
