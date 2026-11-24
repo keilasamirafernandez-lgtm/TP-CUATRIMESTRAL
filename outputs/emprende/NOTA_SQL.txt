@@ -1,0 +1,12 @@
+LADO SQL — CASA NATIVA
+
+Base: SQL Server LocalDB, base CasaNativa. Al iniciar la aplicación, Program.cs ejecuta database.sql por lotes: crea CasaNativa si falta y carga las tablas y datos iniciales una sola vez. No hace falta correr el script manualmente si LocalDB inicia correctamente.
+
+Conexión local de desarrollo: appsettings.json usa (localdb)\MSSQLLocalDB, autenticación integrada y base CasaNativa. No agregues contraseñas de base de datos al repositorio.
+
+Tablas: Categoria y Producto administran el catálogo; Usuario guarda cliente/administrador y hash+salt de clave; Direccion permite varias direcciones por cliente; FormaPago/FormaEntrega parametrizan el checkout; Pedido, ItemPedido e HistorialPedido guardan compra, copia histórica del precio y seguimiento. Las FK mantienen relaciones; CHECK limita precios, cantidades y estados. Los pedidos se cancelan por estado, no se borran.
+
+La API lee productos desde SQL y sólo permite cambios al perfil Administrador. El inicio de la aplicación inicializa la base automáticamente. Registro crea cuentas Cliente. Para convertir tu cuenta local en administradora, registrate primero desde la aplicación y ejecutá en tu SQL local: UPDATE dbo.Usuario SET Perfil='Administrador' WHERE Email='tu correo'; cerrá sesión y volvé a ingresar para actualizar el perfil de la cookie.
+
+El carro permanece en el navegador como borrador; la compra/pedidos aún deben conectarse a las tablas Pedido e ItemPedido para cerrar el circuito persistente. Las demás opciones de administración del prototipo siguen en el navegador. Esta es la siguiente parte de desarrollo, no se debe presentar como circuito ya conectado a SQL.
+
